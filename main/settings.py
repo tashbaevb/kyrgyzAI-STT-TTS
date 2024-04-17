@@ -32,7 +32,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 # Application definition
 
 INSTALLED_APPS = [
-    'drf_yasg', # swagger
+    'drf_yasg',  # swagger
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'audio',
     'bibliothek',
     'tts_api',
-    'translate'
+    'translate',
+    'lesson'
 ]
 
 MIDDLEWARE = [
@@ -154,10 +155,6 @@ MEDIA_URL = 'media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
-BOOKS_FOLDER = 'books/'
-BOOK_IMAGE_FOLDER = 'image/books/'
-LESSON_IMAGE_FOLDER = 'image/lessons/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

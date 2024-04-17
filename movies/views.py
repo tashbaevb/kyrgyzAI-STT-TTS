@@ -1,6 +1,6 @@
 import urllib.parse
 import requests
-from django.http import FileResponse
+from django.http import FileResponse, JsonResponse
 from rest_framework import generics, status
 from moviepy.editor import VideoFileClip
 from django.db.models.signals import post_save
@@ -73,16 +73,13 @@ class MovieRetrieveAPIView(generics.RetrieveAPIView):
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
-        file_path = instance.file.path
-        file_response = FileResponse(open(file_path, 'rb'))
-
         serializer = self.get_serializer(instance)
         movie_data = serializer.data
 
-        # Add a data_fields to response
-        file_response.data = movie_data
+        # Добавить ссылку на файл к данным фильма
+        movie_data['file_url'] = instance.file.url
 
-        return file_response
+        return JsonResponse(movie_data)
 
 
 class MovieRetrieveWithSubtitlesAPIView(generics.RetrieveAPIView):
@@ -100,7 +97,6 @@ class MovieRetrieveWithSubtitlesAPIView(generics.RetrieveAPIView):
         response_data = {
             'id': instance.id,
             'title': instance.title,
-            'description': instance.description,
             'subtitles': subtitles,
         }
 
