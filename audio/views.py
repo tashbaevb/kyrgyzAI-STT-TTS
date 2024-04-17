@@ -1,3 +1,5 @@
+import urllib
+
 import requests
 from django.http import FileResponse
 from rest_framework import generics, status
@@ -86,5 +88,25 @@ class AudioRetrieveWithSubtitlesAPIView(generics.RetrieveAPIView):
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
-        serializer = self.get_serializer(instance)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        language = request.query_params.get('language', 'kg')
+        subtitles = instance.subtitles
+        if language in ['ru', 'en']:
+            subtitles = self.translate_to_language(subtitles, language)
+
+        response_data = {
+            'id': instance.id,
+            'title': instance.title,
+            'subtitles': subtitles,
+        }
+
+        return Response(response_data, status=status.HTTP_200_OK)
+
+    def translate_to_language(self, text, target_language):
+        url = f"https://translate.googleapis.com/translate_a/single?client=gtx&sl=ky&tl={target_language}&dt=t&q=" + urllib.parse.quote(
+            text)
+        response = requests.get(url)
+        if response.status_code == 200:
+            translated_text = response.json()[0][0][0]
+            return translated_text
+        else:
+            return text

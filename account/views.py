@@ -1,6 +1,8 @@
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from rest_framework import permissions, generics, status, views
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 
 from . import models as m, serializers as s
 
@@ -70,3 +72,11 @@ class LogoutAPIView(views.APIView):
             {'Сообщение': 'Пользователь успешно вышел из системы.'},
             status=status.HTTP_200_OK
         )
+
+
+class ProfileAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        return Response({'username': user.username, 'email': user.email})

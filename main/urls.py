@@ -42,6 +42,8 @@ urlpatterns = [
     path('movies/', include('movies.urls')),
     path('stt/', include('stt_api.urls')),
     path('audio/', include('audio.urls')),
+    path('book/', include('bibliothek.urls')),
+    path('tts/', include('tts_api.urls')),
     # Swagger
     path('swagger<str:format>', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

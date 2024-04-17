@@ -45,7 +45,10 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'movies',
     'stt_api',
-    'audio'
+    'audio',
+    'bibliothek',
+    'tts_api',
+    'translate'
 ]
 
 MIDDLEWARE = [
