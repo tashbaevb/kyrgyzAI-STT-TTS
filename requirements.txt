@@ -16,6 +16,7 @@ numpy==1.26.4
 packaging==24.0
 pillow==10.3.0
 proglog==0.1.10
+pydub==0.25.1
 PyJWT==2.8.0
 pytz==2024.1
 PyYAML==6.0.1

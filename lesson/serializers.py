@@ -8,11 +8,6 @@ class GrammarSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ListeningSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.Listening
-        fields = '__all__'
-
 
 class ReadingSerializer(serializers.ModelSerializer):
     class Meta:

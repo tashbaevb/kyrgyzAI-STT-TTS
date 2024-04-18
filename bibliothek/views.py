@@ -5,6 +5,13 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 
 from . import models as m, serializers as s
+from .models import Book
+from .serializers import BookSerializer
+
+
+class BookListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
 
 
 class BookListAPIView(generics.ListAPIView):

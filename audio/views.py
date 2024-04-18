@@ -1,7 +1,7 @@
 import urllib
 
 import requests
-from django.http import FileResponse
+from django.http import FileResponse, JsonResponse
 from rest_framework import generics, status
 from moviepy.editor import AudioFileClip
 from django.db.models.signals import post_save
@@ -64,22 +64,24 @@ def convert_and_send_audio_on_save(sender, instance, created, **kwargs):
         convert_and_send_audio(instance)
 
 
+from django.http import JsonResponse
+
+
 class AudioRetrieveAPIView(generics.RetrieveAPIView):
     queryset = Audio.objects.all()
     serializer_class = AudioSerializer
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
-        file_path = instance.file.path
-        file_response = FileResponse(open(file_path, 'rb'))
 
-        serializer = self.get_serializer(instance)
-        movie_data = serializer.data
+        # Получение URL файла
+        file = instance.file.url
 
-        # Add a data_fields to response
-        file_response.data = movie_data
+        # Получение заголовка
+        title = instance.title
 
-        return file_response
+        # Возвращаем данные в виде JSON-ответа
+        return JsonResponse({'title': title, 'file': file})
 
 
 class AudioRetrieveWithSubtitlesAPIView(generics.RetrieveAPIView):

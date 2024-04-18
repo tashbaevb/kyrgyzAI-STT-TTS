@@ -8,8 +8,9 @@ class Grammar(models.Model):
 
 
 class Listening(models.Model):
-    text = models.TextField()
     answer = models.TextField(null=True)
+    audio_file = models.FileField(upload_to='audio_files/', null=True, blank=True)  # Define audio_file as FileField
+    is_finished = models.BooleanField(default=False)
 
 
 class Reading(models.Model):
@@ -44,7 +45,5 @@ class Answer(models.Model):
 
 class Speaking(models.Model):
     text = models.TextField(null=True)
-    file = models.FileField(upload_to='lesson/speaking')
+    file = models.FileField(upload_to='lesson/speaking', null=True, blank=True)
     subtitles = models.TextField(blank=True, null=True)
-
-
