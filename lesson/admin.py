@@ -1,3 +1,9 @@
 from django.contrib import admin
+from . import models as m
 
-# Register your models here.
+admin.site.register(m.Grammar)
+admin.site.register(m.Listening)
+admin.site.register(m.Reading)
+admin.site.register(m.Speaking)
+admin.site.register(m.Question)
+admin.site.register(m.Answer)
